@@ -1,0 +1,25 @@
+{
+  "name": "dummyapi",
+  "version": "1.0.0",
+  "description": "Api for DummyMarketplace project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThomasAlbt/DummyApi.git"
+  },
+  "author": "ThomasAlbert",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThomasAlbt/DummyApi/issues"
+  },
+  "homepage": "https://github.com/ThomasAlbt/DummyApi#readme",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "mongodb": "^6.18.0",
+    "mongoose": "^8.17.0"
+  }
+}

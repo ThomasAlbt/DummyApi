@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DummyApi Test</title>
+</head>
+<body>
+    <h1>DummyApi Test</h1>
+    <div>
+        <h2>POST (Add/Increment)</h2>
+        <div>
+            <button onclick="postId(1)">POST ID 1</button>
+            <button onclick="postId(2)">POST ID 2</button>
+            <button onclick="postId(3)">POST ID 3</button>
+            <button onclick="postId(4)">POST ID 4</button>
+            <button onclick="postId(5)">POST ID 5</button>
+        </div>
+    </div>
+    <div>
+        <h2>GET (Get Info)</h2>
+        <div>
+            <button onclick="getId(1)">GET ID 1</button>
+            <button onclick="getId(2)">GET ID 2</button>
+            <button onclick="getId(3)">GET ID 3</button>
+            <button onclick="getId(4)">GET ID 4</button>
+            <button onclick="getId(5)">GET ID 5</button>
+        </div>
+    </div>
+    <pre id="output"></pre>
+    <script>
+        async function postId(id) {
+            const res = await fetch(`/${id}`, { method: 'POST' });
+            const data = await res.json();
+            document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+        }
+        async function getId(id) {
+            const res = await fetch(`/${id}`);
+            const data = await res.json();
+            document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+        }
+    </script>
+</body>
