@@ -3,7 +3,7 @@ const router = express.Router();
 const Container = require('../models/Container')
 
 router.get('/', (req, res) => {
-  res.sendFile(process.cwd() + '/views/index.html');
+  res.sendFile(process.cwd() + '../views/index.html');
 });
 
 //Adding an item or incrementing the click
