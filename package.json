@@ -2,9 +2,9 @@
   "name": "dummyapi",
   "version": "1.0.0",
   "description": "Api for DummyMarketplace project",
-  "main": "index.js",
+  "main": "api/index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node api/index.js"
   },
   "repository": {
     "type": "git",
@@ -17,8 +17,11 @@
   },
   "homepage": "https://github.com/ThomasAlbt/DummyApi#readme",
   "dependencies": {
+    "@vercel/node": "^5.3.11",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "helmet": "^8.1.0",
     "mongodb": "^6.18.0",
     "mongoose": "^8.17.0"
   }

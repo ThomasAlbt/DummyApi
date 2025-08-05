@@ -8,6 +8,10 @@ const itemSchema = new mongoose.Schema({
         type: Number,
         default: 1,
     },
+    timeViewed: {
+        type: Number,
+        default: 0,
+    }
 });
 
 const containerSchema = new mongoose.Schema({
