@@ -7,10 +7,10 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+// const PORT = process.env.PORT || 3000;
+// app.listen(PORT, () => {
+//   console.log(`Server running on http://localhost:${PORT}`);
+// });
 
 //Basic security middleware
 
@@ -42,3 +42,5 @@ app.use((err, req, res, next) => {
   console.log(err);
   res.status(500).send('Something is wrong whoops');
 })
+
+module.exports = app;
