@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const Container = require('../models/Container');
-const path = require('path');
 
-router.get('/', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
-});
+// Vercel needs to do it himself apparently
+// router.get('/', (req, res) => {
+//   res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
+// });
 
 //Adding an item or incrementing the click
 

@@ -7,6 +7,9 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 
+
+//Doesn't need this for vercel prod
+
 // const PORT = process.env.PORT || 3000;
 // app.listen(PORT, () => {
 //   console.log(`Server running on http://localhost:${PORT}`);
@@ -33,8 +36,8 @@ mongoose.connect(uri)
 //App
 
 const viewsRoutes = require('../routes/Views.js');
+app.use('/api', viewsRoutes);
 
-app.use('/', viewsRoutes);
 
 // Middleware to handle errors
 

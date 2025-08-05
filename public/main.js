@@ -11,13 +11,13 @@ document.getElementById('get4').addEventListener('click', () => getId(4));
 document.getElementById('get5').addEventListener('click', () => getId(5));
 
 async function postId(id) {
-    const res = await fetch(`/${id}`, { method: 'POST' });
+    const res = await fetch(`/api/${id}`, { method: 'POST' });
     const data = await res.json();
     document.getElementById('output').textContent = JSON.stringify(data, null, 2);
 }
 
 async function getId(id) {
-    const res = await fetch(`/${id}`);
+    const res = await fetch(`/api/${id}`);
     const data = await res.json();
     document.getElementById('output').textContent = JSON.stringify(data, null, 2);
 }
