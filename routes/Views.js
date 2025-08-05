@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const Container = require('../models/Container')
+const Container = require('../models/Container');
+const path = require('path');
 
 router.get('/', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'views', 'index.html'));
+  res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
 });
 
 //Adding an item or incrementing the click
