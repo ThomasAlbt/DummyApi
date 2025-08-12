@@ -7,6 +7,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 
+app.use(express.json());
 
 //Doesn't need this for vercel prod
 
