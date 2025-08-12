@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
+const path = require('path');
 
 app.use(express.json());
 
@@ -23,6 +24,10 @@ const cors = require('cors');
 
 app.use(helmet());
 app.use(cors());
+
+//API key setup
+//TODO
+
 
 //MongoDB connection
 
@@ -46,5 +51,14 @@ app.use((err, req, res, next) => {
   console.log(err);
   res.status(500).send('Something is wrong whoops');
 })
+
+// Add static middleware with MIME type configuration
+app.use('/overlay', express.static(path.join(__dirname, '../public/overlay'), {
+    setHeaders: (res, path) => {
+        if (path.endsWith('.js')) {
+            res.setHeader('Content-Type', 'application/javascript');
+        }
+    }
+}));
 
 module.exports = app;
