@@ -9,29 +9,29 @@ const Container = require('../models/Container');
 
 //Adding an item or incrementing the click
 
-router.get('/:id', async (req, res) => {
+router.post('/:id', async (req, res) => {
     try {
-        let container = await Container.findOne();
         const id = Number(req.params.id);
-        
-        // Handle case where no container exists
+        let container = await Container.findOne();
+
         if (!container) {
-            return res.json({ _id: id, click: 0, timeViewed: 0 });
+            return res.status(404).json({ error: 'No container found' });
         }
-        
-        const result = container.items.find((items) => items._id === id);
-        
-        // Handle case where item doesn't exist
-        if (!result) {
-            return res.json({ _id: id, click: 0, timeViewed: 0 });
+
+        let item = container.items.find((it) => it._id === id);
+        if (!item) {
+            return res.status(404).json({ error: 'Item not found' });
         }
-        
-        res.json(result);
+
+        item.click = (item.click || 0) + 1;
+        await container.save();
+
+        res.json({ message: 'Click incremented', item });
     } catch (error) {
-        console.error('Error fetching item:', error);
+        console.error('Error incrementing click:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
-})
+});
 
 //Getting the infos
 
