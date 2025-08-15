@@ -7,7 +7,7 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.js" },
     { "source": "/overlay/overlayStats.js", "destination": "/public/overlay/overlayStats.js" },
-    { "source": "/overlay/:id", "destination": "/public/overlay/overlay.html" },
+    { "source": "/overlay/([0-9]+)", "destination": "/public/overlay/overlay.html" },
     { "source": "/(.*)", "destination": "/public/$1" }
   ],
   "headers": [
@@ -16,6 +16,15 @@
       "headers": [
         {
           "key": "Content-Type",
+          "value": "application/javascript"
+        }
+      ]
+    },
+    {
+      "source": "/public/overlay/overlayStats.js",
+      "headers": [
+        {
+          "key": "Content-Type", 
           "value": "application/javascript"
         }
       ]

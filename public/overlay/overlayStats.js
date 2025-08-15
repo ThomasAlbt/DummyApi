@@ -12,35 +12,57 @@ async function getId(id) {
         time.textContent = 'Loading...';
         
         // Use absolute path for API
-        const res = await fetch(`/api/${id}`);
+        const res = await fetch(`/api/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        
         if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`);
         }
         
         const data = await res.json();
+        console.log('API Response:', data); // Debug log
         
         if (!data) {
             throw new Error('No data received');
         }
 
-        views.textContent = data.click ? `${data.click} views` : '0 views';
-        time.textContent = data.time || 'N/A';
+        views.textContent = `${data.click || 0} views`;
+        // Format time if it's a number (assuming seconds)
+        const timeViewed = data.timeViewed || 0;
+        time.textContent = timeViewed > 0 ? `${timeViewed}s` : '0s';
 
     } catch (error) {
         console.error('Error fetching stats:', error);
-        document.getElementById('views').textContent = 'Error loading';
-        document.getElementById('time').textContent = 'Error loading';
+        const views = document.getElementById('views');
+        const time = document.getElementById('time');
+        if (views) views.textContent = 'Error loading';
+        if (time) time.textContent = 'Error loading';
     }
 }
 
 // Initialize as soon as possible
 function initializeOverlay() {
     try {
-        const pathParts = window.location.pathname.split('/');
-        const pageId = pathParts[pathParts.length - 1];
+        // Better ID extraction - handle different URL patterns
+        const path = window.location.pathname;
+        console.log('Current path:', path); // Debug log
         
-        if (!pageId || isNaN(pageId)) {
-            throw new Error('Invalid page ID');
+        // Match patterns like /overlay/123 or /overlay/123/
+        const match = path.match(/\/overlay\/(\d+)\/?$/);
+        
+        if (!match) {
+            throw new Error('Invalid page ID - no numeric ID found in path');
+        }
+        
+        const pageId = parseInt(match[1], 10);
+        console.log('Extracted page ID:', pageId); // Debug log
+        
+        if (isNaN(pageId)) {
+            throw new Error('Invalid page ID - not a number');
         }
 
         getId(pageId);
@@ -49,11 +71,16 @@ function initializeOverlay() {
         setInterval(() => getId(pageId), 30000); // Refresh every 30 seconds
     } catch (error) {
         console.error('Initialization error:', error);
-        document.getElementById('views').textContent = 'Invalid ID';
-        document.getElementById('time').textContent = 'Invalid ID';
+        const views = document.getElementById('views');
+        const time = document.getElementById('time');
+        if (views) views.textContent = 'Invalid ID';
+        if (time) time.textContent = 'Invalid ID';
     }
 }
 
-// Use both DOMContentLoaded and load events for better reliability
-document.addEventListener('DOMContentLoaded', initializeOverlay);
-window.addEventListener('load', initializeOverlay);
+// Use both DOMContentLoaded and immediate execution for better reliability
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeOverlay);
+} else {
+    initializeOverlay();
+}

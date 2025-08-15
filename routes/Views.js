@@ -9,27 +9,28 @@ const Container = require('../models/Container');
 
 //Adding an item or incrementing the click
 
-router.post('/:id', async (req, res) => {
-    const id = Number(req.params.id);
-
-    let container = await Container.findOne();
-
-    if (!container) {
-        container = await Container.create({ items: [] });
+router.get('/:id', async (req, res) => {
+    try {
+        let container = await Container.findOne();
+        const id = Number(req.params.id);
+        
+        // Handle case where no container exists
+        if (!container) {
+            return res.json({ _id: id, click: 0, timeViewed: 0 });
+        }
+        
+        const result = container.items.find((items) => items._id === id);
+        
+        // Handle case where item doesn't exist
+        if (!result) {
+            return res.json({ _id: id, click: 0, timeViewed: 0 });
+        }
+        
+        res.json(result);
+    } catch (error) {
+        console.error('Error fetching item:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
-
-
-    const found = container.items.find((items) => items._id === id);
-    if (found) {
-        found.click++;
-        console.log('added +1');
-    } else {
-        container.items.push({ _id: id, click: 1 });
-        console.log('new object added');
-    }
-
-    await container.save();
-    res.send(container.items);
 })
 
 //Getting the infos
